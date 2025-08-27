@@ -86,7 +86,7 @@ export const login = async (req, res) => {
         message: "User logged in successfully",
       });
     } else {
-      res.status(401).json({ error: "Invalid email or password" });
+      res.status(400).json({ error: "Invalid email or password" });
     }
   } catch (error) {
     console.log("Error logging in user", error.message);
