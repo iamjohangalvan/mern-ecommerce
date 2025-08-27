@@ -29,9 +29,15 @@ app.use("/api/analytics", analyticsRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
-  // app.get("/*", (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-  // });
+  app.use(
+    history({
+      index: "/index.html",
+      rewrites: [
+        { from: /^\/api\/.*$/, to: (context) => context.parsedUrl.path }, // keep API routes intact
+      ],
+    })
+  );
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
 }
 
 app.listen(5000, () => {
